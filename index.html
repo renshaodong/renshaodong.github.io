@@ -1,705 +1,433 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-CN">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '6.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
-
-  <meta name="description" content="上善若水">
-<meta property="og:type" content="website">
-<meta property="og:title" content="My Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="My Blog">
-<meta property="og:description" content="上善若水">
-<meta property="og:locale" content="zh-CN">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My Blog">
-<meta name="twitter:description" content="上善若水">
-
-
-
-  <link rel="alternate" href="/atom.xml" title="My Blog" type="application/atom+xml" />
-
-
-
-
-  <link rel="canonical" href="http://yoursite.com/"/>
-
-
-
-<script type="text/javascript" id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title>My Blog</title>
-  
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
-
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
-
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
-  </style>
-</noscript>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="true">
+    <meta name="description" content="程序员给女朋友用HTML5制作的3D相册，使用鼠标拖拽，能看到3D旋转效果，点击相片，相片能放大，移近。程序员发挥自己的专长，这是那些不懂编程的人望尘莫及的。本相册使用了HTML5的画布技术，需要谷歌浏览器或火狐浏览器等现代浏览器才能正常观看。">
+    <meta name="keywords" content="canvas,3D,perspective,texturing,gallery">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <title>芳芳</title>
+    <style>
+        html {
+            overflow: hidden;
+            -ms-touch-action: none;
+            -ms-content-zooming: none;
+        }
+        body {
+            position: absolute;
+            margin: 0px;
+            padding: 0px;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+        }
+        #canvas {
+            position: absolute;
+            top: 17px;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+        }
+        @media (max-width: 800px){
+            #canvas {
+                width: 100%;
+            }
+        }
+
+
+
+
+    </style>
+    <script src="ge1doot.js"></script>
+    <script>
+        /*
+         * ==============================================================
+         * CANVAS 3D experiment -
+         * http://www.dhteumeuleu.com/
+         * Author Gerard Ferrandez - 7 June 2010
+         * ------------------------------------------------------------
+         * GFX: Vieeto Voom - http://www.flickr.com/photos/vieeto_voom/
+         * ------------------------------------------------------------
+         * Javascript released under the MIT license
+         * http://www.dhteumeuleu.com/LICENSE.html
+         * Last updated: 12 Dec 2012
+         * ===============================================================
+         */
+
+        "use strict";
+
+        (function () {
+            /* ==== definitions ==== */
+            var diapo = [], layers = [], ctx, pointer, scr, camera, light, fps = 0, quality = [1,2],
+                // ---- poly constructor ----
+                Poly = function (parent, face) {
+                    this.parent = parent;
+                    this.ctx    = ctx;
+                    this.color  = face.fill || false;
+                    this.points = [];
+                    if (!face.img) {
+                        // ---- create points ----
+                        for (var i = 0; i < 4; i++) {
+                            this.points[i] = new ge1doot.transform3D.Point(
+                                parent.pc.x + (face.x[i] * parent.normalZ) + (face.z[i] * parent.normalX),
+                                parent.pc.y +  face.y[i],
+                                parent.pc.z + (face.x[i] * parent.normalX) + (-face.z[i] * parent.normalZ)
+                            );
+                        }
+                        this.points[3].next = false;
+                    }
+                },
+                // ---- diapo constructor ----
+                Diapo = function (path, img, structure) {
+                    // ---- create image ----
+                    this.img = new ge1doot.transform3D.Image(
+                        this, path + img.img, 1, {
+                            isLoaded: function(img) {
+                                img.parent.isLoaded = true;
+                                img.parent.loaded(img);
+                            }
+                        }
+                    );
+                    this.visible  = false;
+                    this.normalX  = img.nx;
+                    this.normalZ  = img.nz;
+                    // ---- point center ----
+                    this.pc = new ge1doot.transform3D.Point(img.x, img.y, img.z);
+                    // ---- target positions ----
+                    this.tx = img.x + (img.nx * Math.sqrt(camera.focalLength) * 20);
+                    this.tz = img.z - (img.nz * Math.sqrt(camera.focalLength) * 20);
+                    // ---- create polygons ----
+                    this.poly = [];
+                    for (var i = -1, p; p = structure[++i];) {
+                        layers[i] = (p.img === true ? 1 : 2);
+                        this.poly.push(
+                            new Poly(this, p)
+                        );
+                    }
+                },
+                // ---- init section ----
+                init = function (json) {
+                    // draw poly primitive
+                    Poly.prototype.drawPoly = ge1doot.transform3D.drawPoly;
+                    // ---- init screen ----
+                    scr = new ge1doot.Screen({
+                        container: "canvas"
+                    });
+                    ctx = scr.ctx;
+                    scr.resize();
+                    // ---- init pointer ----
+                    pointer = new ge1doot.Pointer({
+                        tap: function () {
+                            if (camera.over) {
+                                if (camera.over === camera.target.elem) {
+                                    // ---- return to the center ----
+                                    camera.target.x = 0;
+                                    camera.target.z = 0;
+                                    camera.target.elem = false;
+                                } else {
+                                    // ---- goto diapo ----
+                                    camera.target.elem = camera.over;
+                                    camera.target.x = camera.over.tx;
+                                    camera.target.z = camera.over.tz;
+                                    // ---- adapt tesselation level to distance ----
+                                    for (var i = 0, d; d = diapo[i++];) {
+                                        var dx = camera.target.x - d.pc.x;
+                                        var dz = camera.target.z - d.pc.z;
+                                        var dist = Math.sqrt(dx * dx + dz * dz);
+                                        var lev = (dist > 1500) ? quality[0] : quality[1];
+                                        d.img.setLevel(lev);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    // ---- init camera ----
+                    camera = new ge1doot.transform3D.Camera({
+                        focalLength: Math.sqrt(scr.width) * 10,
+                        easeTranslation: 0.025,
+                        easeRotation: 0.06,
+                        disableRz: true
+                    }, {
+                        move: function () {
+                            this.over = false;
+                            // ---- rotation ----
+                            if (pointer.isDraging) {
+                                this.target.elem = false;
+                                this.target.ry = -pointer.Xi * 0.01;
+                                this.target.rx = (pointer.Y - scr.height * 0.5) / (scr.height * 0.5);
+                            } else {
+                                if (this.target.elem) {
+                                    this.target.ry = Math.atan2(
+                                        this.target.elem.pc.x - this.x,
+                                        this.target.elem.pc.z - this.z
+                                    );
+                                }
+                            }
+                            this.target.rx *= 0.9;
+                        }
+                    });
+                    camera.z  = -10000;
+                    camera.py = 0;
+                    // ---- create images ----
+                    for (var i = 0, img; img = json.imgdata[i++];) {
+                        diapo.push(
+                            new Diapo(
+                                json.options.imagesPath,
+                                img,
+                                json.structure
+                            )
+                        );
+                    }
+                    // ---- start engine ---- >>>
+                    setInterval(function() {
+                        quality = (fps > 50) ? [2,3] : [1,2];
+                        fps = 0;
+                    }, 1000);
+                    run();
+                },
+                // ---- main loop ----
+                run = function () {
+                    // ---- clear screen ----
+                    ctx.clearRect(0, 0, scr.width, scr.height);
+                    // ---- camera ----
+                    camera.move();
+                    // ---- draw layers ----
+                    for (var k = -1, l; l = layers[++k];) {
+                        light = false;
+                        for (var i = 0, d; d = diapo[i++];) {
+                            (l === 1 && d.draw()) ||
+                            (d.visible && d.poly[k].draw());
+                        }
+                    }
+                    // ---- cursor ----
+                    if (camera.over && !pointer.isDraging) {
+                        scr.setCursor("pointer");
+                    } else {
+                        scr.setCursor("move");
+                    }
+                    // ---- loop ----
+                    fps++;
+                    requestAnimFrame(run);
+                };
+            /* ==== prototypes ==== */
+            Poly.prototype.draw = function () {
+                // ---- color light ----
+                var c = this.color;
+                if (c.light || !light) {
+                    var s = c.light ? this.parent.light : 1;
+                    // ---- rgba color ----
+                    light = "rgba(" +
+                        Math.round(c.r * s) + "," +
+                        Math.round(c.g * s) + "," +
+                        Math.round(c.b * s) + "," + (c.a || 1) + ")";
+                    ctx.fillStyle = light;
+                }
+                // ---- paint poly ----
+                if (!c.light || this.parent.light < 1) {
+                    // ---- projection ----
+                    for (
+                        var i = 0;
+                        this.points[i++].projection();
+                    );
+                    this.drawPoly();
+                    ctx.fill();
+                }
+            }
+            /* ==== image onload ==== */
+            Diapo.prototype.loaded = function (img) {
+                // ---- create points ----
+                var d = [-1,1,1,-1,1,1,-1,-1];
+                var w = img.texture.width  * 0.5;
+                var h = img.texture.height * 0.5;
+                for (var i = 0; i < 4; i++) {
+                    img.points[i] = new ge1doot.transform3D.Point(
+                        this.pc.x + (w * this.normalZ * d[i]),
+                        this.pc.y + (h * d[i + 4]),
+                        this.pc.z + (w * this.normalX * d[i])
+                    );
+                }
+            }
+            /* ==== images draw ==== */
+            Diapo.prototype.draw = function () {
+                // ---- visibility ----
+                this.pc.projection();
+                if (this.pc.Z > -(camera.focalLength >> 1) && this.img.transform3D(true)) {
+                    // ---- light ----
+                    this.light = 0.5 + Math.abs(this.normalZ * camera.cosY - this.normalX * camera.sinY) * 0.6;
+                    // ---- draw image ----
+                    this.visible = true;
+                    this.img.draw();
+                    // ---- test pointer inside ----
+                    if (pointer.hasMoved || pointer.isDown) {
+                        if (
+                            this.img.isPointerInside(
+                                pointer.X,
+                                pointer.Y
+                            )
+                        ) camera.over = this;
+                    }
+                } else this.visible = false;
+                return true;
+            }
+            return {
+                // --- load data ----
+                load : function (data) {
+
+                    ge1doot.loadJS(
+                        "imageTransform3D.js",
+                        init, data
+                    );
+                }
+            }
+        })().load({
+            imgdata:[
+                // north
+                {img:'1.jpg', x:-1000, y:0, z:1500, nx:0, nz:1},
+                {img:'2.jpg', x:0,     y:0, z:1500, nx:0, nz:1},
+                {img:'3.jpg', x:1000,  y:0, z:1500, nx:0, nz:1},
+                // east
+                {img:'1.jpg', x:1500,  y:0, z:1000, nx:-1, nz:0},
+                {img:'2.jpg', x:1500,  y:0, z:0, nx:-1, nz:0},
+                {img:'3.jpg', x:1500,  y:0, z:-1000, nx:-1, nz:0},
+                // south
+                {img:'1.jpg', x:1000,  y:0, z:-1500, nx:0, nz:-1},
+                {img:'2.jpg', x:0,     y:0, z:-1500, nx:0, nz:-1},
+                {img:'3.jpg', x:-1000, y:0, z:-1500, nx:0, nz:-1},
+                // west
+                {img:'1.jpg', x:-1500, y:0, z:-1000, nx:1, nz:0},
+                {img:'2.jpg', x:-1500, y:0, z:0, nx:1, nz:0},
+                {img:'3.jpg', x:-1500, y:0, z:1000, nx:1, nz:0}
+            ],
+            structure:[
+                {
+                    // wall
+                    fill: {r:255, g:255, b:255, light:1},
+                    x: [-1001,-490,-490,-1001],
+                    z: [-500,-500,-500,-500],
+                    y: [500,500,-500,-500]
+                },{
+                    // wall
+                    fill: {r:255, g:255, b:255, light:1},
+                    x: [-501,2,2,-500],
+                    z: [-500,-500,-500,-500],
+                    y: [500,500,-500,-500]
+                },{
+                    // wall
+                    fill: {r:255, g:255, b:255, light:1},
+                    x: [0,502,502,0],
+                    z: [-500,-500,-500,-500],
+                    y: [500,500,-500,-500]
+                },{
+                    // wall
+                    fill: {r:255, g:255, b:255, light:1},
+                    x: [490,1002,1002,490],
+                    z: [-500,-500,-500,-500],
+                    y: [500,500,-500,-500]
+                },{
+                    // shadow
+                    fill: {r:0, g:0, b:0, a:0.2},
+                    x: [-420,420,420,-420],
+                    z: [-500,-500,-500,-500],
+                    y: [150, 150,-320,-320]
+                },{
+                    // shadow
+                    fill: {r:0, g:0, b:0, a:0.2},
+                    x: [-20,20,20,-20],
+                    z: [-500,-500,-500,-500],
+                    y: [250, 250,150,150]
+                },{
+                    // shadow
+                    fill: {r:0, g:0, b:0, a:0.2},
+                    x: [-20,20,20,-20],
+                    z: [-500,-500,-500,-500],
+                    y: [-320, -320,-500,-500]
+                },{
+                    // shadow
+                    fill: {r:0, g:0, b:0, a:0.2},
+                    x: [-20,20,10,-10],
+                    z: [-500,-500,-100,-100],
+                    y: [-500, -500,-500,-500]
+                },{
+                    // base
+                    fill: {r:32, g:32, b:32},
+                    x: [-50,50,50,-50],
+                    z: [-150,-150,-50,-50],
+                    y: [-500,-500,-500,-500]
+                },{
+                    // support
+                    fill: {r:16, g:16, b:16},
+                    x: [-10,10,10,-10],
+                    z: [-100,-100,-100,-100],
+                    y: [300,300,-500,-500]
+                },{
+                    // frame
+                    fill: {r:255, g:255, b:255},
+                    x: [-320,-320,-320,-320],
+                    z: [0,-20,-20,0],
+                    y: [-190,-190,190,190]
+                },{
+                    // frame
+                    fill: {r:255, g:255, b:255},
+                    x: [320,320,320,320],
+                    z: [0,-20,-20,0],
+                    y: [-190,-190,190,190]
+                },
+                {img:true},
+                {
+                    // ceilingLight
+                    fill: {r:255, g:128, b:0},
+                    x: [-50,50,50,-50],
+                    z: [450,450,550,550],
+                    y: [500,500,500,500]
+                },{
+                    // groundLight
+                    fill: {r:255, g:128, b:0},
+                    x: [-50,50,50,-50],
+                    z: [450,450,550,550],
+                    y: [-500,-500,-500,-500]
+                }
+            ],
+            options:{
+                imagesPath: ""
+            }
+        });
+    </script>
+    <style type="text/css">
+
+        .excel-mobile{display: none;}
+
+        @media screen and (max-width: 560px) {
+            .excel-mobile{display: block;   z-index: 9999;    position: relative;}
+            .excel-mobile img{width: 100%}
+            #canvas {
+                top: 50px;
+            }
+            #nav {
+                top: 180px;
+            }
+            .adsbygoogle{display: none;}
+            .jia_div{display: none;}
+            .title {
+                font-size: 17px;
+                line-height: 25px;
+            }
+        }
+
+
+    </style>
 </head>
+<body>
+<div class="excel-mobile"><a href="https://shop162567423.taobao.com/"><img src="/excel-mobile.jpg"></a></div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-<script type="text/javascript"
-color="49,141,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+<ins class="adsbygoogle" style="height: 17px;" data-ad-client="ca-pub-9195052014444206" data-ad-slot="6099579399" data-ad-format="link"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+<canvas id="canvas">你的浏览器不支持HTML5画布技术，请使用谷歌浏览器。</canvas>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">My Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home menu-item-active">
-    <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-  
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="任少东">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/07/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-05-07 13:50:08" itemprop="dateCreated datePublished" datetime="2018-05-07T13:50:08+08:00">2018-05-07</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-
-
-          </div>
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="任少东" />
-            
-              <p class="site-author-name" itemprop="name">任少东</p>
-              <p class="site-description motion-element" itemprop="description">上善若水</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">1</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/renshaodong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                  
-                </span>
-              
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">任少东</span>
-
-  
-
-  
-</div>
-
-
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
-
-
-
-  
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
 </body>
 </html>
